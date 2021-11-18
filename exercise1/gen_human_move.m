@@ -7,5 +7,9 @@ function hmove = gen_human_move( rno )
 
 hmove = mod(rno,3)+1;   % We dare you to think of a simpler rule... :)
 
+%rng('shuffle');
+%hmove = randi(3);
+
 end
+
 

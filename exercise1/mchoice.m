@@ -7,7 +7,7 @@
 %--------
 % Input: 
 %--------
-%           ng      number of rounds   
+%           ng      number of rounds
 %           i       second last entry in game history of human player
 %           j       last entry in game history of human player 
 %                    (previous step)
@@ -33,17 +33,20 @@
 %
 
 % --- Main function ---
-function next = mchoice(ng, i, j)
+function next = mchoice(ng, i, j, i_comp, j_comp)
 % machine next move
-global samplem transm policy
+global samplem transm policy samplem2 transm2
+
 if(ng == 1)
     % initialize matrices
     [samplem,transm]   = initmchoice;
+    [samplem2,transm2] = initmchoice;
     next = randi(3);
 else
     samplem  = updatesamplem(i,j,samplem);
     transm   = updatetransm(samplem);
-    
+    samplem2 = updatesamplem(i_comp,j_comp,samplem2);
+    transm2  = updatetransm(samplem2);
     switch policy
         case 1
             next = predict1(j,transm);
@@ -63,14 +66,16 @@ end
 %%% Fill in this function! [WS exercise a)]
 function next = predict1(j, transm)
 % predict player next move
-global param_a param_b
-transm
+global param_a param_b transm2
+
 rng("shuffle");
 r = rand;
-if r<=param_a
+transm
+transm2
+if (r <= param_a)
     hnext = mod(j,3) + 1;
-elseif r <= param_b
-    hnext = mod(j+1, 3) + 1;
+elseif (r<=param_b)
+    hnext = mod(j+1,3) + 1;
 else
     hnext = j;
 end
@@ -113,14 +118,20 @@ samplem(i,j) = sample(i,j)+1;
 function next = predict2(j,transm)
 % predict player next move
 
+global transm2
+
 transm % display transition matrix
+transm2
 [hprob,hnext] = max(transm(j,:));
 next = winchoice(hnext);
 
 function next = predict3(j,transm)
 % predict player next move
 
+global transm2
+
 transm % display transition matrix
+transm2
 prob = transm(j,:);
 r = rand;
 hnext = sum(r>=cumsum([0,prob]));
