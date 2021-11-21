@@ -5,7 +5,7 @@ y(1) = y_0;
 i = 1;
 t = 0;
 while (t < t_end)
-    gradient1 = f(t, y);
+    gradient1 = f(t, y(i));
     midstep1 = y(i) + 0.5*dt*gradient1;
     gradient2 = f(t+0.5*dt, midstep1);
     midstep2 = y(i) + 0.5*dt*gradient2;
