@@ -30,6 +30,7 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+title('Dahlquists test Equation: Explicit Euler method');
 legend('show');
 fig_count = fig_count + 1;
 hold off
@@ -45,6 +46,7 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     plot(t, y_heun, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+title('Dahlquists test Equation: Method of Heun');
 legend('show');
 fig_count = fig_count + 1;
 hold off
@@ -60,6 +62,7 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     plot(t, y_runge_kutta, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+title('Dahlquists test Equation: Runge-Kutta method');
 legend('show');
 fig_count = fig_count + 1;
 hold off
@@ -88,5 +91,6 @@ fprintf('Error Red=   --    %.6f    %.6f    %.6f\n',error(3,2)/error(3,1),error(
 % plot(log(dt),log(error(1,:)));
 % plot(log(dt), log(error(2,:)));
 % plot(log(dt), log(error(3,:)));
+% title('Error Plot in Log Scale');
 % legend('Euler', 'Heun', 'Runge-Kutta');
 end
