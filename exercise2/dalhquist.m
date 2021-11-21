@@ -4,7 +4,7 @@ global fig_count;
 figure(fig_count);
 plot(t, exp(-t), 'DisplayName','Analytical');
 xlabel('t');
-ylabel('-e^t');
+ylabel('e^{-t}');
 title('Analytical solution');
     function y = gradient(t, x)
         y = -x;
@@ -27,9 +27,11 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     error(1,i) = err_cal(y_eul,exp(-t), dt, 5);
     i = i+1;
     hold on
-    plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
+    plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+xlabel('t');
+ylabel('x');
 title('Dahlquists test Equation: Explicit Euler method');
 legend('show');
 fig_count = fig_count + 1;
@@ -43,9 +45,11 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     error(2,i) = err_cal(y_heun,exp(-t), dt, 5);
     i = i+1;
     hold on
-    plot(t, y_heun, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
+    plot(t, y_heun, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+xlabel('t');
+ylabel('x');
 title('Dahlquists test Equation: Method of Heun');
 legend('show');
 fig_count = fig_count + 1;
@@ -59,9 +63,11 @@ for dt = [1,1/2.0,1/4.0,1/8.0]
     error(3,i) = err_cal(y_runge_kutta,exp(-t), dt, 5);
     i = i+1;
     hold on
-    plot(t, y_runge_kutta, 'DisplayName',strcat('dt = ', sprintf('%.6f', dt)));
+    plot(t, y_runge_kutta, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
 plot(t, exp(-t), 'DisplayName','Analytical');
+xlabel('t');
+ylabel('x');
 title('Dahlquists test Equation: Runge-Kutta method');
 legend('show');
 fig_count = fig_count + 1;
@@ -84,13 +90,15 @@ fprintf('Error=  %.6f   %.6f    %.6f    %.6f\n',error(3,1),error(3,2),error(3,3)
 fprintf('Error Red=   --    %.6f    %.6f    %.6f\n',error(3,2)/error(3,1),error(3,3)/error(3,2),error(3,4)/error(3,3));
 
 %% Log Plot
-% figure(fig_count)
-% fig_count = fig_count+1;
-% dt = [1,1/2.0,1/4.0,1/8.0];
-% hold on
-% plot(log(dt),log(error(1,:)));
-% plot(log(dt), log(error(2,:)));
-% plot(log(dt), log(error(3,:)));
-% title('Error Plot in Log Scale');
-% legend('Euler', 'Heun', 'Runge-Kutta');
+figure(fig_count)
+fig_count = fig_count+1;
+dt = [1,1/2.0,1/4.0,1/8.0];
+hold on
+plot(log(dt),log(error(1,:)));
+plot(log(dt), log(error(2,:)));
+plot(log(dt), log(error(3,:)));
+xlabel('log(dt)');
+ylabel('log(error)');
+title('Error Plot in Log Scale');
+legend('Euler', 'Heun', 'Runge-Kutta');
 end
