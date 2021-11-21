@@ -1,6 +1,7 @@
 function dalhquist()
 t = 0:0.1:5;
-figure(1);
+global fig_count;
+figure(fig_count);
 plot(t, exp(-t), 'DisplayName','Analytical');
 xlabel('t');
 ylabel('-e^t');
@@ -16,7 +17,7 @@ title('Analytical solution');
         end
         final_err = sqrt(dt*err/tend);
     end
-fig_count = 2;
+fig_count = fig_count+1;
 figure(fig_count)
 error = zeros(3,4);
 i = 1;
@@ -63,9 +64,25 @@ legend('show');
 fig_count = fig_count + 1;
 hold off
 
-error %error printing and reduction printing left
+%% Error
+disp('Explicit Euler method (q=1):');
+disp('δt =      1         1/2         1/4          1/8 ');
+fprintf('Error=  %.6f   %.6f    %.6f    %.6f\n',error(1,1),error(1,2),error(1,3),error(1,4));
+fprintf('Error Red=   --    %.6f    %.6f    %.6f\n\n',error(1,2)/error(1,1),error(1,3)/error(1,2),error(1,4)/error(1,3));
 
+disp('Method of Heun (q=2):');
+disp('δt =      1         1/2         1/4          1/8 ');
+fprintf('Error=  %.6f   %.6f    %.6f    %.6f\n',error(2,1),error(2,2),error(2,3),error(2,4));
+fprintf('Error Red=   --    %.6f    %.6f    %.6f\n\n',error(2,2)/error(2,1),error(2,3)/error(2,2),error(2,4)/error(2,3));
+
+disp('Runge-Kutta method (q=4):');
+disp('δt =      1         1/2         1/4          1/8 ');
+fprintf('Error=  %.6f   %.6f    %.6f    %.6f\n',error(3,1),error(3,2),error(3,3),error(3,4));
+fprintf('Error Red=   --    %.6f    %.6f    %.6f\n',error(3,2)/error(3,1),error(3,3)/error(3,2),error(3,4)/error(3,3));
+
+%% Log Plot
 % figure(fig_count)
+% fig_count = fig_count+1;
 % dt = [1,1/2.0,1/4.0,1/8.0];
 % hold on
 % plot(log(dt),log(error(1,:)));
