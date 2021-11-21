@@ -15,5 +15,7 @@ function vanderpol()
     plot(t, y(:,1), '*', 'Color','r', 'DisplayName','y vs t');
     plot(t, y(:,2), '-', 'Color', 'b', 'DisplayName','x vs t');
     plot(y(:,1),y(:,2), 'o', 'Color','G', 'DisplayName', 'x vs y');
+    title('Van-der-Pol-Oscillator(Method of Heun)');
     legend('show');
+    fig_count = fig_count + 1;
 end
