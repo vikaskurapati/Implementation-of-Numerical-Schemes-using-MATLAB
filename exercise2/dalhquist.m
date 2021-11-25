@@ -7,6 +7,8 @@ xlabel('t');
 ylabel('e^{-t}');
 title('Analytical solution');
     function y = gradient(t, x)
+        %defined this function to maintain consistency with the scheme
+        %where the gradient can be a function of x and t
         y = -x;
     end
     function final_err = err_cal(y_cal,y_analytical, dt, tend)
@@ -40,7 +42,9 @@ hold off
 figure(fig_count)
 i=1;
 for dt = [1,1/2.0,1/4.0,1/8.0]
-    y_heun = expl_heun(1,dt,5, @gradient);
+    %Replaced the Heun with the extended heun for vectors to show that it
+    %Works with scalars also
+    y_heun = expl_heun_vector(1,dt,5, @gradient);
     t = 0:dt:5;
     error(2,i) = err_cal(y_heun,exp(-t), dt, 5);
     i = i+1;
@@ -89,16 +93,17 @@ disp('δt =      1         1/2         1/4          1/8 ');
 fprintf('Error=  %.6f   %.6f    %.6f    %.6f\n',error(3,1),error(3,2),error(3,3),error(3,4));
 fprintf('Error Red=   --    %.6f    %.6f    %.6f\n',error(3,2)/error(3,1),error(3,3)/error(3,2),error(3,4)/error(3,3));
 
-%% Log Plot
-figure(fig_count)
-fig_count = fig_count+1;
-dt = [1,1/2.0,1/4.0,1/8.0];
-hold on
-plot(log(dt),log(error(1,:)));
-plot(log(dt), log(error(2,:)));
-plot(log(dt), log(error(3,:)));
-xlabel('log(dt)');
-ylabel('log(error)');
-title('Error Plot in Log Scale');
-legend('Euler', 'Heun', 'Runge-Kutta');
+%% Log Log Plot for errors and dt to check the order of the schemes
+% Uncomment the below lines to get the plots
+% figure(fig_count)
+% fig_count = fig_count+1;
+% dt = [1,1/2.0,1/4.0,1/8.0];
+% hold on
+% plot(log(dt),log(error(1,:)));
+% plot(log(dt), log(error(2,:)));
+% plot(log(dt), log(error(3,:)));
+% xlabel('log(dt)');
+% ylabel('log(error)');
+% title('Error Plot in Log Scale');
+% legend('Euler', 'Heun', 'Runge-Kutta');
 end
