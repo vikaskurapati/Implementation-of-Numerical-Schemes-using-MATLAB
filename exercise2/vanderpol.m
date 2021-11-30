@@ -36,6 +36,7 @@ function vanderpol()
     dX = dxdt(X,Y);
     dY = dydt(X,Y);
     figure(fig_count)
+    hold on
     quiver(X, Y, dX,dY);
     axis tight
     title("Optional: Phase Space of y vs x")
