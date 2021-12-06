@@ -7,7 +7,7 @@ hold on
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0:dt:5;
     y_eul = expl_euler(1, dt, 5, @gradient1a);
-    error(1,i) = err_cal(y_eul,exp(-7*t), dt, 5);
+    error_expl(1,i) = err_cal(y_eul,exp(-7*t), dt, 5);
     i = i+1;
     plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
@@ -27,11 +27,11 @@ hold on
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0.0:dt:5.0;
     y_impl = impl_euler(1.0, dt, 5.0, @f,@df);
-    %error(1,i) = err_cal(y_eul,exp(-7*t), dt, 5);
+    error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
     i = i+1;
     plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
-ylim([-1,1]);
+%ylim([-1,1]);
 title("Solution of Implicit Euler");
 xlabel("t");
 ylabel("x");
