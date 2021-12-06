@@ -11,7 +11,7 @@ while (t < t_end)
     midstep2 = y(i) + 0.5*dt*gradient2;
     gradient3 = f(t+0.5*dt, midstep2);
     midstep3 = y(i) + dt*gradient3;
-    gradient4 = f(t+0.5*dt, midstep3);
+    gradient4 = f(t+dt, midstep3);
     gradient = (gradient1 + 2*gradient2 + 2*gradient3 + gradient4)/6.0;
     y(i+1) = y(i) + dt*gradient;
     t = t+dt;
