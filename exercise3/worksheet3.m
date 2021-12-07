@@ -56,16 +56,46 @@ Error = [error_impl(1,:);error_impl_red(1,:)];
 Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
 disp(Result);
 
-%% Vanderpol oscillator started
-y_0 = [1,1];
+%% g) Vanderpol oscillator started
+figure(figure_count)
+y_0 = [1;1];
 y_expl_vanderpol = expl_euler(y_0, 0.1,20,@gradientg);
 y_expl_vanderpol_2 = expl_euler(y_0, 0.05,20, @gradientg);
+plot(y_expl_vanderpol_2);
+figure_count = figure_count+1;
+
+%% i) Vanderpol oscillator - Implicit
+figure(figure_count)
+y_0 = [1;1];
+y_impl_vanderpol = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
+dt = 0.1;
+t_end = 20;
+t = 0:dt:t_end;
+plot(y_impl_vanderpol);
+figure_count = figure_count+1;
+subplot(2,1,1);
+hold on
+plot(t, y_impl_vanderpol(1,:), 'DisplayName','y vs t');
+plot(t, y_impl_vanderpol(2,:), 'DisplayName','x vs t');
+hold off
 
 %% Functions
 function grad = gradientg(t, y)
     grad = zeros(size(y));
     grad(1) = y(2);
     grad(2) = -y(1) + 4.0*y(2)*(1-y(1)*y(1));
+end
+
+function y = f_vand(x)
+    y(1) = x(2);
+    y(2) = -x(1) + 4.0*x(2)*(1-x(1)*x(1));
+end
+
+function y = df_vand(x)
+    y(1,1) = 0;
+    y(1,2) = 1;
+    y(2,1) = -2.0*4.0*x(1)*x(2)-1.0;
+    y(2,2) = 4.0*(1-x(1)*x(1));
 end
 
 function y = f(x)

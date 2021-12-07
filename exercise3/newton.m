@@ -3,9 +3,10 @@ function y= newton(x_0,G,dG)
     tol=1;
     xcurr = x_0;
     while(i<100 && tol>1e-8)
-      xnext=xcurr-(G(xcurr)/dG(xcurr));
+      b =  G(xcurr)/dG(xcurr);
+      xnext=xcurr-b(1,:)';
       i=i+1;
-      tol=abs(xcurr-xnext);
+      tol=norm((xcurr-xnext));
       xcurr=xnext;
     end
     y = xnext;
