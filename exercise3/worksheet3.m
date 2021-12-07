@@ -1,7 +1,8 @@
 close all; clear all; clc;
 figure_count=1;
 i=1;
-%%1a
+
+%% a)
 figure(figure_count)
 hold on
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
@@ -18,9 +19,19 @@ xlabel("t");
 ylabel("x");
 hold off
 figure_count = figure_count + 1;
+%% Printing errors to MATLAB console
+disp("Explicit Euler Method");
+VarNames = {'δt', '1/2', '1/4', '1/8', '1/16', '1/32'};
+name = ["Error"; "Error Reduction"];
+error_expl_red = ["-",error_expl(1,1)/error_expl(1,2),error_expl(1,2)/error_expl(1,3),error_expl(1,3)/error_expl(1,4),error_expl(1,4)/error_expl(1,5)];
+Error = [error_expl(1,:);error_expl_red(1,:)];
+Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
+disp(Result);
 
-%%Testing newton
+%% b) Testing newton
 %y = newton(1,@Gtest,@dGtest);
+
+%% c) Implementing implicit Euler Method
 figure(figure_count)
 i = 1;
 hold on
@@ -38,7 +49,14 @@ ylabel("x");
 legend('show');
 hold off
 figure_count = figure_count + 1;
+%% Printing errors to MATLAB console
+disp("Implicit Euler Method");
+error_impl_red = ["-",error_impl(1,1)/error_impl(1,2),error_impl(1,2)/error_impl(1,3),error_impl(1,3)/error_impl(1,4),error_impl(1,4)/error_impl(1,5)];
+Error = [error_impl(1,:);error_impl_red(1,:)];
+Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
+disp(Result);
 
+%% Functions
 function y = f(x)
     y = -7*x;
 end
@@ -65,6 +83,7 @@ end
 function y = Gtest(x)
     y = x*x*x - 3;
 end
+
 function y = dGtest(x)
     y = 3*x*x;
 end
