@@ -56,7 +56,18 @@ Error = [error_impl(1,:);error_impl_red(1,:)];
 Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
 disp(Result);
 
+%% Vanderpol oscillator started
+y_0 = [1,1];
+y_expl_vanderpol = expl_euler(y_0, 0.1,20,@gradientg);
+y_expl_vanderpol_2 = expl_euler(y_0, 0.05,20, @gradientg);
+
 %% Functions
+function grad = gradientg(t, y)
+    grad = zeros(size(y));
+    grad(1) = y(2);
+    grad(2) = -y(1) + 4.0*y(2)*(1-y(1)*y(1));
+end
+
 function y = f(x)
     y = -7*x;
 end
