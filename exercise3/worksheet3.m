@@ -58,20 +58,26 @@ disp(Result);
 %% g) Vanderpol oscillator started
 figure(figure_count)
 y_0 = [1;1];
-y_expl_vanderpol = expl_euler(y_0, 0.1,20,@gradientg);
-y_expl_vanderpol_2 = expl_euler(y_0, 0.05,20, @gradientg);
-dt = 0.05;
+dt = 0.1;
+y_expl_vanderpol = expl_euler(y_0, dt,20,@gradientg);
 t_end = 20;
 t = 0:dt:t_end;
+subplot(2,1,1);
 hold on
-plot(t',y_expl_vanderpol_2(:,1), 'DisplayName','x');
-plot(t',y_expl_vanderpol_2(:,2), 'DisplayName','y');
-title("Solution of Van-der-Pol-Oscillator Equation: Explicit Euler");
+plot(t, y_expl_vanderpol(:,1), 'DisplayName','x');
+plot(t, y_expl_vanderpol(:,2), 'DisplayName','y');
 xlabel("t");
 ylabel("x & y");
 hold off
 legend('show');
-figure_count = figure_count+1;
+subplot(2,1,2)
+hold on
+plot(y_expl_vanderpol(:,1),y_expl_vanderpol(:,2));
+xlabel("x");
+ylabel("y");
+hold off
+sgtitle('Solution of Van-der-Pol-Oscillator Equation: Explicit Euler')
+figure_count = figure_count + 1;
 
 %% i) Vanderpol oscillator - Implicit
 figure(figure_count)
@@ -80,7 +86,6 @@ y_impl_vanderpol = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
 dt = 0.1;
 t_end = 20;
 t = 0:dt:t_end;
-plot(y_impl_vanderpol);
 figure_count = figure_count+1;
 subplot(2,1,1);
 hold on
