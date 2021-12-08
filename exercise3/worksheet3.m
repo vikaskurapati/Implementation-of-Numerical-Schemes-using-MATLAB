@@ -29,8 +29,9 @@ Error = [error_expl(1,:);error_expl_red(1,:)];
 Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
 disp(Result);
 
-%% b) Testing newton
-%y = newton(1,@Gtest,@dGtest);
+%% b)Testing newton
+% y = newton(1,@Gtest,@dGtest);
+% y
 
 %% c) Implementing implicit Euler Method
 figure(figure_count)
@@ -38,10 +39,15 @@ i = 1;
 hold on
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0.0:dt:5.0;
-    y_impl = impl_euler(1.0, dt, 5.0, @f,@df);
-    error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
-    i = i+1;
-    plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+    [y_impl,status] = impl_euler(1.0, dt, 5.0, @f,@df);
+    if status == 1
+        error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
+        i = i+1;
+        plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+    else
+        i = i+1;
+        disp(strcat('Newtons method did not converge for dt = ', sprintf('%.3f', dt)));
+    end
 end
 title("Solution of Dahlquist's Equation: Implicit Euler (Newton)");
 xlabel("t");
@@ -105,28 +111,31 @@ figure_count = figure_count + 1;
 %% i) Vanderpol oscillator - Implicit
 figure(figure_count)
 y_0 = [1;1];
-y_impl_vanderpol = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
-dt = 0.1;
-t_end = 20;
-t = 0:dt:t_end;
-figure_count = figure_count+1;
-subplot(2,1,1);
-hold on
-plot(t, y_impl_vanderpol(1,:), 'DisplayName','x');
-plot(t, y_impl_vanderpol(2,:), 'DisplayName','y');
-xlabel("t");
-ylabel("x & y");
-hold off
-legend('show');
-subplot(2,1,2)
-hold on
-plot(y_impl_vanderpol(1,:),y_impl_vanderpol(2,:));
-xlabel("x");
-ylabel("y");
-hold off
-sgtitle('Solution of Van-der-Pol-Oscillator Equation: Implicit Euler (Newton), dt = 0.1')
-figure_count = figure_count + 1;
-
+[y_impl_vanderpol,status] = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
+if status == 1
+    dt = 0.1;
+    t_end = 20;
+    t = 0:dt:t_end;
+    figure_count = figure_count+1;
+    subplot(2,1,1);
+    hold on
+    plot(t, y_impl_vanderpol(1,:), 'DisplayName','x');
+    plot(t, y_impl_vanderpol(2,:), 'DisplayName','y');
+    xlabel("t");
+    ylabel("x & y");
+    hold off
+    legend('show');
+    subplot(2,1,2)
+    hold on
+    plot(y_impl_vanderpol(1,:),y_impl_vanderpol(2,:));
+    xlabel("x");
+    ylabel("y");
+    hold off
+    sgtitle('Solution of Van-der-Pol-Oscillator Equation: Implicit Euler (Newton), dt = 0.1')
+    figure_count = figure_count + 1;
+else
+    disp(strcat('Newtons method did not converge'));
+end
 %% Functions
 function grad = gradientg(t, y)
     grad = zeros(size(y));
