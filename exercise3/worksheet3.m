@@ -12,6 +12,7 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     i = i+1;
     plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
+plot(t, exp(-7*t),'DisplayName','Analytical');
 legend('show');
 ylim([-1,1]);
 title("Solution of Dahlquist's Equation: Explicit Euler");
