@@ -5,12 +5,18 @@ i=1;
 %% a)
 figure(figure_count)
 hold on
+stable_exp = [];
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0:dt:5;
     y_eul = expl_euler(1, dt, 5, @gradient1a);
     error_expl(1,i) = err_cal(y_eul,exp(-7*t), dt, 5);
     i = i+1;
     plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+    if dt < 2/7
+        stable_exp = [stable_exp, 'X'];
+    else
+        stable_exp = [stable_exp, ' '];
+    end
 end
 plot(t, exp(-7*t),'DisplayName','Analytical');
 legend('show');
@@ -20,7 +26,7 @@ xlabel("t");
 ylabel("x");
 hold off
 figure_count = figure_count + 1;
-%% Printing errors to MATLAB console
+%% Printing errors to MATLAB console and tables
 disp("Explicit Euler Method");
 VarNames = {'δt', '1/2', '1/4', '1/8', '1/16', '1/32'};
 name = ["Error"; "Error Reduction"];
@@ -37,6 +43,7 @@ disp(Result);
 figure(figure_count)
 i = 1;
 hold on
+stable_imp = [];
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0.0:dt:5.0;
     [y_impl,status] = impl_euler(1.0, dt, 5.0, @f,@df);
@@ -44,6 +51,7 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
         error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
         i = i+1;
         plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+        stable_imp = [stable_imp, 'X'];
     else
         i = i+1;
         disp(strcat('Newtons method did not converge for dt = ', sprintf('%.3f', dt)));
@@ -61,7 +69,13 @@ error_impl_red = ["-",error_impl(1,1)/error_impl(1,2),error_impl(1,2)/error_impl
 Error = [error_impl(1,:);error_impl_red(1,:)];
 Result = table(name,Error(:,1),Error(:,2),Error(:,3),Error(:,4),Error(:,5), 'VariableNames',VarNames);
 disp(Result);
-
+%% Printing Stability Results to console
+disp("Stable cases");
+VarNames = {'δt', '1/2', '1/4', '1/8', '1/16', '1/32'};
+name = ["Explicit Euler"; "Implicit Euler"];
+stability = [stable_exp;stable_imp];
+Result = table(name, stability(:,1),stability(:,2),stability(:,3),stability(:,4),stability(:,5),'VariableNames',VarNames);
+disp(Result);
 %% g) Vanderpol oscillator started
 figure(figure_count)
 y_0 = [1;1];
