@@ -14,7 +14,7 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
 end
 legend('show');
 ylim([-1,1]);
-title("Solution of Explicit Euler");
+title("Solution of Dahlquist's Equation: Explicit Euler");
 xlabel("t");
 ylabel("x");
 hold off
@@ -42,8 +42,7 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     i = i+1;
     plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
 end
-%ylim([-1,1]);
-title("Solution of Implicit Euler");
+title("Solution of Dahlquist's Equation: Implicit Euler (Newton)");
 xlabel("t");
 ylabel("x");
 legend('show');
@@ -61,7 +60,17 @@ figure(figure_count)
 y_0 = [1;1];
 y_expl_vanderpol = expl_euler(y_0, 0.1,20,@gradientg);
 y_expl_vanderpol_2 = expl_euler(y_0, 0.05,20, @gradientg);
-plot(y_expl_vanderpol_2);
+dt = 0.05;
+t_end = 20;
+t = 0:dt:t_end;
+hold on
+plot(t',y_expl_vanderpol_2(:,1), 'DisplayName','x');
+plot(t',y_expl_vanderpol_2(:,2), 'DisplayName','y');
+title("Solution of Van-der-Pol-Oscillator Equation: Explicit Euler");
+xlabel("t");
+ylabel("x & y");
+hold off
+legend('show');
 figure_count = figure_count+1;
 
 %% i) Vanderpol oscillator - Implicit
@@ -75,9 +84,20 @@ plot(y_impl_vanderpol);
 figure_count = figure_count+1;
 subplot(2,1,1);
 hold on
-plot(t, y_impl_vanderpol(1,:), 'DisplayName','y vs t');
-plot(t, y_impl_vanderpol(2,:), 'DisplayName','x vs t');
+plot(t, y_impl_vanderpol(1,:), 'DisplayName','x');
+plot(t, y_impl_vanderpol(2,:), 'DisplayName','y');
+xlabel("t");
+ylabel("x & y");
 hold off
+legend('show');
+subplot(2,1,2)
+hold on
+plot(y_impl_vanderpol(1,:),y_impl_vanderpol(2,:));
+xlabel("x");
+ylabel("y");
+hold off
+sgtitle('Solution of Van-der-Pol-Oscillator Equation: Implicit Euler (Newton)')
+figure_count = figure_count + 1;
 
 %% Functions
 function grad = gradientg(t, y)
@@ -87,8 +107,8 @@ function grad = gradientg(t, y)
 end
 
 function y = f_vand(x)
-    y(1) = x(2);
-    y(2) = -x(1) + 4.0*x(2)*(1-x(1)*x(1));
+    y(1,:) = x(2);
+    y(2,:) = -x(1) + 4.0*x(2)*(1-x(1)*x(1));
 end
 
 function y = df_vand(x)
