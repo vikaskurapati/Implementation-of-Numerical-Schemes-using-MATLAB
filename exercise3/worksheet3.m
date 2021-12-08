@@ -76,7 +76,29 @@ plot(y_expl_vanderpol(:,1),y_expl_vanderpol(:,2));
 xlabel("x");
 ylabel("y");
 hold off
-sgtitle('Solution of Van-der-Pol-Oscillator Equation: Explicit Euler')
+sgtitle('Solution of Van-der-Pol-Oscillator Equation: Explicit Euler with dt = 0.1')
+figure_count = figure_count + 1;
+
+figure(figure_count)
+dt = 0.05;
+y_expl_vanderpol = expl_euler(y_0, dt,20,@gradientg);
+t_end = 20;
+t = 0:dt:t_end;
+subplot(2,1,1);
+hold on
+plot(t, y_expl_vanderpol(:,1), 'DisplayName','x');
+plot(t, y_expl_vanderpol(:,2), 'DisplayName','y');
+xlabel("t");
+ylabel("x & y");
+hold off
+legend('show');
+subplot(2,1,2)
+hold on
+plot(y_expl_vanderpol(:,1),y_expl_vanderpol(:,2));
+xlabel("x");
+ylabel("y");
+hold off
+sgtitle('Solution of Van-der-Pol-Oscillator Equation: Explicit Euler with dt = 0.05')
 figure_count = figure_count + 1;
 
 %% i) Vanderpol oscillator - Implicit
@@ -101,7 +123,7 @@ plot(y_impl_vanderpol(1,:),y_impl_vanderpol(2,:));
 xlabel("x");
 ylabel("y");
 hold off
-sgtitle('Solution of Van-der-Pol-Oscillator Equation: Implicit Euler (Newton)')
+sgtitle('Solution of Van-der-Pol-Oscillator Equation: Implicit Euler (Newton), dt = 0.1')
 figure_count = figure_count + 1;
 
 %% Functions
