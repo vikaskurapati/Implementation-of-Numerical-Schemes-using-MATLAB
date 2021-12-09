@@ -12,6 +12,9 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     error_expl(1,i) = err_cal(y_eul,exp(-7*t), dt, 5);
     i = i+1;
     plot(t, y_eul, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+    % y_(n+1) = y_n + dt*(-7*y_n) => y_(n+1) = y_n*(1-7*dt) => for the
+    % scheme to be stable |1-7*dt| < 1 => for positive values of dt, dt <
+    % 2/7
     if dt < 2/7
         stable_exp = [stable_exp, 'X'];
     else
@@ -51,6 +54,11 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
         error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
         i = i+1;
         plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
+        % y_(n+1) = y_n + dt*(-7*y_(n+1)) => y_(n+1)*(1+7*dt) = y_n 
+        % => y_(n+1) = (1/(1+7*dt))*y_n 
+        % for the scheme to be stable |1+7*dt| < 1 which is satisfied by
+        % all positive values of dt as long as the newtons method gives us
+        % stable results
         stable_imp = [stable_imp, 'X'];
     else
         i = i+1;
