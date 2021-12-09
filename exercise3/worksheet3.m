@@ -46,8 +46,8 @@ hold on
 stable_imp = [];
 for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
     t = 0.0:dt:5.0;
-    [y_impl,status] = impl_euler(1.0, dt, 5.0, @f,@df);
-    if status == 1
+    y_impl = impl_euler(1.0, dt, 5.0, @f,@df);
+    if sum(isnan(y_impl(:,end))) == 0
         error_impl(1,i) = err_cal(y_impl,exp(-7*t), dt, 5);
         i = i+1;
         plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
@@ -125,8 +125,8 @@ figure_count = figure_count + 1;
 %% i) Vanderpol oscillator - Implicit
 figure(figure_count)
 y_0 = [1;1];
-[y_impl_vanderpol,status] = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
-if status == 1
+y_impl_vanderpol = impl_euler(y_0, 0.1, 20,@f_vand, @df_vand);
+if sum(isnan(y_impl_vanderpol(:,end))) == 0
     dt = 0.1;
     t_end = 20;
     t = 0:dt:t_end;

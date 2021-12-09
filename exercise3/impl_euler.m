@@ -1,4 +1,4 @@
-function [y,status] = impl_euler(y_0, dt, t_end, f, df)
+function y = impl_euler(y_0, dt, t_end, f, df)
     t = 0.0:dt:t_end;
     %y = zeros(length(t),1);
     y(:,1) = y_0;
@@ -6,8 +6,8 @@ function [y,status] = impl_euler(y_0, dt, t_end, f, df)
     for i = 2:length(t)
         G = @(x) x - y(:,i-1) - dt*f(x);
         dG = @(x) I - dt*df(x);
-        [y(:,i),status] = newton(y(:,i-1), G, dG);
-        if status == 0
+        y(:,i) = newton(y(:,i-1), G, dG);
+        if sum(isnan(y(:,i))) > 0
             disp('Newtons method did not converge, exiting the problem now');
             break
         end
