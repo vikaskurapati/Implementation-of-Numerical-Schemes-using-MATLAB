@@ -56,7 +56,7 @@ for dt = [1/2.0,1/4.0,1/8.0,1/16.0,1/32.0]
         plot(t, y_impl, 'DisplayName',strcat('dt = ', sprintf('%.3f', dt)));
         % y_(n+1) = y_n + dt*(-7*y_(n+1)) => y_(n+1)*(1+7*dt) = y_n 
         % => y_(n+1) = (1/(1+7*dt))*y_n 
-        % for the scheme to be stable |1+7*dt| < 1 which is satisfied by
+        % for the scheme to be stable 1/|1+7*dt| < 1 which is satisfied by
         % all positive values of dt as long as the newtons method gives us
         % stable results
         stable_imp = [stable_imp, 'X'];
