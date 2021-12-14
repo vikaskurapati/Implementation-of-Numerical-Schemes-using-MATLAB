@@ -68,6 +68,7 @@ end
 title("Solution of Dahlquist's Equation: Implicit Euler (Newton)");
 xlabel("t");
 ylabel("x");
+ylim([-1,1]);
 legend('show');
 hold off
 figure_count = figure_count + 1;

@@ -10,9 +10,12 @@ function y= newton(x_0,G,dG)
         tol=norm((xcurr-xnext)); %Using norm of the error vector as a tolerance limit
         xcurr=xnext;
       else
-          y = ones(n,1)*NaN;
+          xnext = ones(n,1)*NaN;
           break
       end
+    end
+    if (i == 100)
+        disp('Newtons Method didnt converge, taking the last value from the iteration');
     end
     y = xnext;
 end
