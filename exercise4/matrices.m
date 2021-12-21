@@ -1,4 +1,4 @@
-function [A, b, anal] = matrices(nx,ny)
+function [A, b] = matrices(nx,ny)
     n = (nx)*(ny);
     hx = 1/(nx+1);
     hy = 1/(ny+1);
