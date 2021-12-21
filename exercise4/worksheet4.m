@@ -1,22 +1,31 @@
 %%
 figure_count = 1;
+runtime_direct_full = [];
+storage_direct_full = [];
+runtime_direct_sparse = [];
+storage_direct_sparse = [];
+runtime_iterative_gauss = [];
+storage_iterative_gauss = [];
 for nx = [3,7,15,31,63]
     ny = nx;
     %% Direct Solution with Full matrix
     [A, b] = matrices(nx,ny);
     tic
-    solution_mat = A\b;
-    toc;
+    solution_mat_direct = A\b;
+    runtime_direct_full = [runtime_direct_full, toc];
+    storage_direct_full = [storage_direct_full, numel(A)+numel(b)+numel(solution_mat_direct)];
     T = zeros(nx+2,ny+2);
     for i = 2:nx+1
         for j = 2:ny+1
-            T(i,j)=solution_mat((i-2)*nx+j-1);
+            T(i,j)=solution_mat_direct((i-2)*nx+j-1);
         end
     end
     %% Direct Solution with Sparse matrix
     A_s = sparse(A);
+    tic
     solution_mat_sparse = A_s\b;
-
+    runtime_direct_sparse = [runtime_direct_sparse, toc];
+    storage_direct_sparse = [storage_direct_sparse, nnz(A_s) + numel(b)+numel(solution_mat_sparse)];
     T_s = zeros(nx+2,ny+2);
     for i = 2:nx+1
         for j = 2:ny+1
@@ -24,7 +33,10 @@ for nx = [3,7,15,31,63]
         end
     end
     %% Iterative Solution with Gauss Seidel
-    solution_mat_g_s = gauss_seidel(b,nx,ny);
+    tic
+    solution_mat_g_s = gauss_seidel(b,nx,ny);    
+    runtime_iterative_gauss = [runtime_iterative_gauss,toc];
+    storage_iterative_gauss = [runtime_iterative_gauss, numel(solution_mat_g_s)+numel(b)];
     T_g_s = zeros(nx+2,ny+2);
     for i = 2:nx+1
         for j = 2:ny+1
