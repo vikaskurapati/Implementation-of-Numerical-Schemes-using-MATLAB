@@ -1,3 +1,4 @@
+close all;clear all;clc;
 %% Creating empty vectors to store data
 figure_count = 1;
 runtime_direct_full = [];
@@ -51,51 +52,51 @@ for nx = [3,7,15,31,63]
     error_gauss = [error_gauss, sqrt(sum(sum((T_anal-T_g_s).*(T_anal-T_g_s)))/(nx*ny))];
     
     %% Plotting Direct Solution with Full matrix
+    figure('units','normalized','outerposition',[0 0 1 1]) % Adding this line to make the plots fullscreen automatically
     figure(figure_count)
+    sgtitle(strcat("Grid size : ",num2str(nx)))
+    subplot(2,3,1)
     surf(X,Y,T);
     zlim([0,1.1]);
-    title(strcat("Surface plot for direct solution with full matrix with grid size ", num2str(nx)));
+    title("Surface plot for direct solution with full matrix");
     colormap("jet");
     colorbar;
-    figure_count = figure_count + 1;
-
-    figure(figure_count)
+    
+    subplot(2,3,4)
     contourf(X,Y,T,'ShowText','on');
-    title(strcat("Contour plot for direct solution with sparse matrix with grid size ", num2str(nx)));
+    title("Contour plot for direct solution with sparse matrix");
     colormap("jet");
     colorbar;
-    figure_count = figure_count + 1;
+    
 
 %% Plotting Direct Solution with Sparse matrix
-    figure(figure_count)
+    subplot(2,3,2)
     surf(X,Y,T_s);
     zlim([0,1.1]);
-    title(strcat("Surface plot for direct solution with sparse matrix with grid size ", num2str(nx)));
+    title("Surface plot for direct solution with sparse matrix");
     colormap("jet");
     colorbar;
-    figure_count = figure_count + 1;
-
-    figure(figure_count)
+    
+    subplot(2,3,5)
     contourf(X,Y,T_s,'ShowText','on');
-    title(strcat("Contour plot for direct solution with sparse matrix with grid size ", num2str(nx)));
+    title("Contour plot for direct solution with sparse matrix");
     colormap("jet");
     colorbar;
-    figure_count = figure_count + 1;
 
 %% Plotting Iterative Solution with Gauss Seidel
-    figure(figure_count)
+    subplot(2,3,3)
     surf(X,Y,T_g_s);
     zlim([0,1.1]);
-    title(strcat("Surface plot for iterative solution with Gauss Seidel with grid size ", num2str(nx)));
+    title("Surface plot for iterative solution with Gauss Seidel");
     colormap("jet");
     colorbar;
-    figure_count = figure_count + 1;
-
-    figure(figure_count)
+    
+    subplot(2,3,6)
     contourf(X,Y,T_g_s,'ShowText','on');
-    title(strcat("Contour plot for direct solution with sparse matrix with grid size ", num2str(nx)));
+    title("Contour plot for iterative solution with Gauss Seidel");
     colormap("jet");
     colorbar;
+
     figure_count = figure_count + 1;
 end
 %% Printing Runtime and Storage to MATLAB console using tables for Direct Solver with full matrix
