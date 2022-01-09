@@ -45,31 +45,31 @@ function T = gauss_seidel(b,nx,ny)
         for i = 1:nx
             for j = 1:ny
                 if(i~=1 && j~=1 && i~=nx && j~=ny)
-                   ax((i-1)*nx+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
+                   ax((i-1)*ny+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
                 end
                 if(i==1)
                     if(j==1)
-                        ax((i-1)*nx+j) = T(i+1,j)/(hx*hx) + T(i,j+1)/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = T(i+1,j)/(hx*hx) + T(i,j+1)/(hy*hy) - k*T(i,j);
                     elseif (j==ny)
-                        ax((i-1)*nx+j) = (T(i+1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i+1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
                     else
-                        ax((i-1)*nx+j) = (T(i+1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i+1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
                     end
                 end
                 if(i==nx)
                     if(j==1)
-                        ax((i-1)*nx+j) = (T(i-1,j))/(hx*hx) + (T(i,j+1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i-1,j))/(hx*hx) + (T(i,j+1))/(hy*hy) - k*T(i,j);
                     elseif (j==ny)
-                        ax((i-1)*nx+j) = (T(i-1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i-1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
                     else
-                        ax((i-1)*nx+j) = (T(i-1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i-1,j))/(hx*hx) + (T(i,j-1)+T(i,j+1))/(hy*hy) - k*T(i,j);
                     end
                 end
                 if(j==1 && i~=1 && i~=nx)
-                        ax((i-1)*nx+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j+1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j+1))/(hy*hy) - k*T(i,j);
                 end
                 if(j==ny && i~=1 && i~=nx)
-                        ax((i-1)*nx+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
+                        ax((i-1)*ny+j) = (T(i-1,j)+T(i+1,j))/(hx*hx) + (T(i,j-1))/(hy*hy) - k*T(i,j);
                 end
             end
         end

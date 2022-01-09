@@ -64,7 +64,7 @@ for nx = [3,7,15,31,63]
     
     subplot(2,3,4)
     contourf(X,Y,T,'ShowText','on');
-    title("Contour plot for direct solution with sparse matrix");
+    title("Contour plot for direct solution with full matrix");
     colormap("jet");
     colorbar;
     
