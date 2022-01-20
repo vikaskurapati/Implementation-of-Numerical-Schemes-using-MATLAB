@@ -7,4 +7,5 @@ for i = 2:size(X,1)-1
     end
 end
 surf(X,Y,T_s)
+%zlim([1.1*min(min(T_s)) 1.1*max(max(T_s))]);
 end

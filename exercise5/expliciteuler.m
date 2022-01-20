@@ -19,8 +19,8 @@ for n = [3,7,15,31]
         nx = n;
         ny = n;
         
-        A = matrices(nx, ny);
-    
+        A = sparse(matrices(nx, ny));
+   
         T = ones(nx*ny, 1);
     
         t = 0;

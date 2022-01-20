@@ -15,7 +15,7 @@ sgtitle("Implicit Euler, t=4/8")
 for n = [3,7,15,31]
     nx = n;ny=n;
     dt = 1/64;
-    A = matrices(nx, ny);
+    A = sparse(matrices(nx, ny));
     I = eye(size(A));
     T = ones(nx*ny, 1);
     x = linspace(0,1,nx+2);
