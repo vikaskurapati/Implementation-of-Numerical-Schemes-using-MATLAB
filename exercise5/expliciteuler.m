@@ -13,16 +13,13 @@ figure('units','normalized','outerposition',[0 0 1 1])
 figure(4)
 sgtitle("Explicit Euler,t=4/8")
 for n = [3,7,15,31]
+    nx = n;
+    ny = n;
+    A = sparse(matrices(nx, ny));
 %for n = [31]
     for dt = [1/64, 1/128, 1/256, 1/512, 1/1024, 1/2048, 1/4096]
     %for dt = [1/1024, 1/2048]
-        nx = n;
-        ny = n;
-        
-        A = sparse(matrices(nx, ny));
-   
         T = ones(nx*ny, 1);
-    
         t = 0;
         x = linspace(0,1,nx+2);
         y = linspace(0,1,ny+2);
